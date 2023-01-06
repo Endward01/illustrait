@@ -10,12 +10,13 @@ function App() {
   const [color, setColor] = useState({ r: 0, g: 0, b: 0, a: 1 });
   const [lineWidth, setLineWidth] = useState(1);
 
-  const ctrKye = (event) => {
-    console.log(event.key);
-    if (event.key === "control") {
-      console.log("control");
-    }
-  };
+  //   const[canvasWidth, setCanvasWidth] = useState(1400)
+  //   const[canvasHeight, setCanvasHeight] = useState(800)
+
+  // const widthAndHeightCanvas = () =>{
+
+  // }
+
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -42,7 +43,8 @@ function App() {
   };
 
   const drawingStart = ({ nativeEvent }) => {
-    const { x, y } = nativeEvent;
+    const x = nativeEvent.layerX;
+    const y = nativeEvent.layerY;
     contextRef.current.beginPath();
     contextRef.current.moveTo(x, y);
     const canvas = canvasRef.current;
@@ -59,14 +61,17 @@ function App() {
 
   const drawing = ({ nativeEvent }) => {
     if (isDrwaing) {
-      const { x, y } = nativeEvent;
+      console.log(nativeEvent);
+
+      const x = nativeEvent.layerX;
+      const y = nativeEvent.layerY;
       contextRef.current.lineTo(x, y);
       contextRef.current.stroke();
     }
   };
 
   return (
-    <main onKeyDown={ctrKye} className="flex relative h-screen">
+    <main className="flex relative h-screen">
       <Navbar
         clear={clear}
         color={color}
