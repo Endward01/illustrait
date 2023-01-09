@@ -1,8 +1,14 @@
 import { useState } from "react";
 import DrawingZone from "./DrawingZone";
 
-function DrawingSection({ drawingStart, drawing, drawingEnd, canvasRef }) {
-
+function DrawingSection({
+  drawingStart,
+  drawing,
+  drawingEnd,
+  canvasRef,
+  canvasWidth,
+  canvasHeight,
+}) {
   const [isZoom, setIsZoom] = useState(0.9);
 
   const scrollHandler = (event) => {
@@ -25,7 +31,7 @@ function DrawingSection({ drawingStart, drawing, drawingEnd, canvasRef }) {
       className="w-full bg-slate-500 flex justify-end overflow-hidden"
     >
       <div
-        className="w-full h-full  relative"
+        className="grow h-full flex justify-center items-center relative"
         style={{ transform: `scale(${isZoom})` }}
       >
         <DrawingZone
@@ -33,6 +39,8 @@ function DrawingSection({ drawingStart, drawing, drawingEnd, canvasRef }) {
           drawing={drawing}
           drawingEnd={drawingEnd}
           canvasRef={canvasRef}
+          canvasWidth={canvasWidth}
+          canvasHeight={canvasHeight}
         />
       </div>
     </div>

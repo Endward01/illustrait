@@ -9,27 +9,28 @@ function App() {
   const [isDrwaing, setIsDrwaing] = useState(false);
   const [color, setColor] = useState({ r: 0, g: 0, b: 0, a: 1 });
   const [lineWidth, setLineWidth] = useState(1);
+  const [canvasWidth, setCanvasWidth] = useState(600);
+  const [canvasHeight, setCanvasHeight] = useState(600);
 
-  //   const[canvasWidth, setCanvasWidth] = useState(1400)
-  //   const[canvasHeight, setCanvasHeight] = useState(800)
-
-  // const widthAndHeightCanvas = () =>{
-
-  // }
+  const newCanvasWidth = (width) => {
+    setCanvasWidth(width);
+  };
+  const newCanvasHeight = (height) => {
+    setCanvasHeight(height);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.width = `&{window.innerWidth}px`;
-    canvas.style.height = `&{window.innerHeight}px`;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    canvas.style.width = `&{canvasWidth}px`;
+    canvas.style.height = `&{canvasHeight}px`;
 
     const context = canvas.getContext("2d");
-    // context.scale(2, 2)
+    // context.scale(2, 2);
     context.lineCap = "round";
     contextRef.current = context;
-  }, []);
+  }, [canvasHeight, canvasWidth]);
 
   const clear = () => {
     const canvas = canvasRef.current;
@@ -43,8 +44,8 @@ function App() {
   };
 
   const drawingStart = ({ nativeEvent }) => {
-    const x = nativeEvent.layerX;
-    const y = nativeEvent.layerY;
+    const x = nativeEvent;
+    const y = nativeEvent;
     contextRef.current.beginPath();
     contextRef.current.moveTo(x, y);
     const canvas = canvasRef.current;
@@ -61,8 +62,6 @@ function App() {
 
   const drawing = ({ nativeEvent }) => {
     if (isDrwaing) {
-      console.log(nativeEvent);
-
       const x = nativeEvent.layerX;
       const y = nativeEvent.layerY;
       contextRef.current.lineTo(x, y);
@@ -78,12 +77,16 @@ function App() {
         setColor={setColor}
         lineWidth={lineWidth}
         setLineWidth={setLineWidth}
+        newCanvasWidth={newCanvasWidth}
+        newCanvasHeight={newCanvasHeight}
       />
       <DrawingSection
         drawingStart={drawingStart}
         drawing={drawing}
         drawingEnd={drawingEnd}
         canvasRef={canvasRef}
+        canvasWidth={canvasWidth}
+        canvasHeight={canvasHeight}
       />
     </main>
   );
